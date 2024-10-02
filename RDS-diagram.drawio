@@ -230,7 +230,7 @@
             <mxPoint x="480" y="520" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="0qfIr_ebQrdZO7ob4R2L-28" value="Subscription" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="0qfIr_ebQrdZO7ob4R2L-28" value="Subscriptions" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
           <mxGeometry x="370" y="140" width="209" height="150" as="geometry" />
         </mxCell>
         <mxCell id="0qfIr_ebQrdZO7ob4R2L-29" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;html=1;" vertex="1" parent="0qfIr_ebQrdZO7ob4R2L-28">
@@ -280,12 +280,12 @@
             <mxRectangle width="60" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="0qfIr_ebQrdZO7ob4R2L-40" value="expireDate: DATE" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;html=1;whiteSpace=wrap;" vertex="1" parent="0qfIr_ebQrdZO7ob4R2L-38">
+        <mxCell id="0qfIr_ebQrdZO7ob4R2L-40" value="ExpirationDate: DATE" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;html=1;whiteSpace=wrap;" vertex="1" parent="0qfIr_ebQrdZO7ob4R2L-38">
           <mxGeometry x="60" width="149" height="30" as="geometry">
             <mxRectangle width="149" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="0qfIr_ebQrdZO7ob4R2L-52" value="Subscription Plan" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="0qfIr_ebQrdZO7ob4R2L-52" value="Subscription Plans" style="shape=table;startSize=30;container=1;collapsible=1;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;html=1;whiteSpace=wrap;" vertex="1" parent="1">
           <mxGeometry x="660" y="170" width="209" height="90" as="geometry" />
         </mxCell>
         <mxCell id="0qfIr_ebQrdZO7ob4R2L-53" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=1;html=1;" vertex="1" parent="0qfIr_ebQrdZO7ob4R2L-52">
@@ -309,7 +309,7 @@
             <mxRectangle width="60" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="0qfIr_ebQrdZO7ob4R2L-58" value="level: CHAR(15)" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;html=1;whiteSpace=wrap;" vertex="1" parent="0qfIr_ebQrdZO7ob4R2L-56">
+        <mxCell id="0qfIr_ebQrdZO7ob4R2L-58" value="SubLevel: CHAR(15)" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;html=1;whiteSpace=wrap;" vertex="1" parent="0qfIr_ebQrdZO7ob4R2L-56">
           <mxGeometry x="60" width="149" height="30" as="geometry">
             <mxRectangle width="149" height="30" as="alternateBounds" />
           </mxGeometry>

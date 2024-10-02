@@ -17,7 +17,8 @@ namespace JumpForFunDB
         public DateTime DateOfBirth { get; }
         public DateTime CreationDate { get; }
 
-        public Member(int memberId, int? bookingId, string fName, string lName, string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate)
+        public Member(int memberId, int? bookingId, string fName, string lName,
+            string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate)
         {
             MemberId = memberId;
             BookingId = bookingId;
@@ -29,7 +30,8 @@ namespace JumpForFunDB
             CreationDate = creationDate;
         }
 
-        public Member(int? bookingId, string fName, string lName, string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate)
+        public Member(int? bookingId, string fName, string lName,
+            string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate)
         {
             BookingId = bookingId;
             FName = fName;
