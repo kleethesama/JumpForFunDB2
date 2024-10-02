@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JumpForFunDB
+﻿namespace JumpForFunDB
 {
     public class Member
     {
@@ -16,9 +10,10 @@ namespace JumpForFunDB
         public string Email { get; set; }
         public DateTime DateOfBirth { get; }
         public DateTime CreationDate { get; }
+        public string CenterLocation { get; set; }
 
         public Member(int memberId, int? bookingId, string fName, string lName,
-            string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate)
+            string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate, string centerLocation)
         {
             MemberId = memberId;
             BookingId = bookingId;
@@ -28,10 +23,11 @@ namespace JumpForFunDB
             Email = email;
             DateOfBirth = dateOfBirth;
             CreationDate = creationDate;
+            CenterLocation = centerLocation;
         }
 
         public Member(int? bookingId, string fName, string lName,
-            string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate)
+            string phoneNo, string email, DateTime dateOfBirth, DateTime creationDate, string centerLocation)
         {
             BookingId = bookingId;
             FName = fName;
@@ -40,6 +36,7 @@ namespace JumpForFunDB
             Email = email;
             DateOfBirth = dateOfBirth;
             CreationDate = creationDate;
+            CenterLocation = centerLocation;
         }
 
         public override string ToString()
