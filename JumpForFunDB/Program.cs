@@ -1,9 +1,13 @@
 ﻿using Microsoft.Data.SqlClient;
 
+DatabaseManager testDB = new("JumpForFun");
+testDB.FirstTimeSetup();
+
 public class DatabaseManager
 {
     public string DatabaseName { get; }
     public string Connection { get; }
+    public bool SetupCompleted { get; set; } = false;
 
     public DatabaseManager(string dbName)
     {
@@ -13,10 +17,14 @@ public class DatabaseManager
 
     public void FirstTimeSetup()
     {
-        CreateDatabase();
+        if (!SetupCompleted)
+        {
+            CreateDatabase();
+            SetupCompleted = true;
+        }
     }
 
-    public void CreateDatabase()
+    private void CreateDatabase()
     {
         using (SqlConnection conn = new("Server=localhost;Integrated Security=True;database=master;Encrypt=False"))
         {

@@ -17,9 +17,10 @@ namespace JumpForFunDB
                 try
                 {
                     conn.Open();
-                    string query = "INSERT INTO MEMBER (FName, LName, PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation) " +
-                                   "VALUES (@FName, @LName, @PhoneNo, @Email, @DateOfBirth, @CreationDate, @CenterLocation)";
+                    string query = "INSERT INTO MEMBER (BookingId, FName, LName, PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation) " +
+                                   "VALUES (@BookingId, @FName, @LName, @PhoneNo, @Email, @DateOfBirth, @CreationDate, @CenterLocation)";
                     SqlCommand command = new(query, conn);
+                    command.Parameters.AddWithValue("BookingId", member.BookingId);
                     command.Parameters.AddWithValue("@FName", member.FName);
                     command.Parameters.AddWithValue("@LName", member.LName);
                     command.Parameters.AddWithValue("@PhoneNo", member.PhoneNo);
