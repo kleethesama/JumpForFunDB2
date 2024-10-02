@@ -39,7 +39,7 @@ CREATE TABLE Center (id INT IDENTITY(1, 1) PRIMARY KEY,
 
 --ALTER TABLE Employees ADD Salary DECIMAL(10, 2);
 
---INSERT INTO Employees (Name, Position, Salary) VALUES ('John Doe', 'Manager', 37000)
+--INSERT INTO Employees (Name, Position, Salary) VALUES ('John Doe', 'Manager', 37000);
 --DELETE FROM Employees WHERE ID=100002;
 
 --SELECT * FROM Employees;

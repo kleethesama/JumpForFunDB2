@@ -8,7 +8,7 @@ namespace JumpForFunDB
 {
     public class Member
     {
-        public int MemberId { get; set; }
+        public int MemberId { get; }
         public int? BookingId { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
