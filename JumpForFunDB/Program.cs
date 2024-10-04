@@ -17,7 +17,7 @@ Member testMember = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.c
 // Testing if the Add call was a success by getting the member from the database again.
 
 int memberId = 100000;
-Member member1 = memberManager.Get(memberId) ?? throw new Exception($"The member with memberId {100000} was not found.");
+Member member1 = memberManager.Get(memberId) ?? throw new Exception($"The member with member id {memberId} was not found.");
 
 Debug.Assert(member1.BookingId == null);
 Debug.Assert(member1.FName == "Bent");
