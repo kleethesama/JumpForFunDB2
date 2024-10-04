@@ -1,9 +1,15 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+
 namespace JumpForFunDB
 {
     internal class MemberManager
     {
-        public DatabaseManager DatabaseManager { get; set; }
+        public DatabaseManager DatabaseManager { get; }
 
         public MemberManager(DatabaseManager dbManager)
         {
@@ -17,10 +23,10 @@ namespace JumpForFunDB
                 try
                 {
                     conn.Open();
-                    string query = "INSERT INTO MEMBER (BookingId, FName, LName, PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation) " +
+                    string query = "INSERT INTO Members (BookingId, FName, LName, PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation) " +
                                    "VALUES (@BookingId, @FName, @LName, @PhoneNo, @Email, @DateOfBirth, @CreationDate, @CenterLocation)";
                     SqlCommand command = new(query, conn);
-                    command.Parameters.AddWithValue("BookingId", member.BookingId);
+                    command.Parameters.AddWithValue("@BookingId", member.BookingId == null ? DBNull.Value : member.BookingId);
                     command.Parameters.AddWithValue("@FName", member.FName);
                     command.Parameters.AddWithValue("@LName", member.LName);
                     command.Parameters.AddWithValue("@PhoneNo", member.PhoneNo);
@@ -29,7 +35,6 @@ namespace JumpForFunDB
                     command.Parameters.AddWithValue("@CreationDate", member.CreationDate);
                     command.Parameters.AddWithValue("@CenterLocation", member.CenterLocation);
                     command.ExecuteNonQuery();
-                    Console.WriteLine($"Data has been successfully added!");
                 }
                 catch (Exception ex)
                 {
@@ -40,7 +45,6 @@ namespace JumpForFunDB
 
         public Member Get(int memberId)
         {
-            Member member = null;
             using (SqlConnection myConn = new(DatabaseManager.Connection))
             {
                 try
@@ -55,10 +59,9 @@ namespace JumpForFunDB
                         {
                             if (reader.GetInt32(0) == memberId)
                             {
-                                member = new Member(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2),
+                                return new Member(reader.GetInt32(0), reader.IsDBNull(1) ? null : reader.GetInt32(1), reader.GetString(2),
                                                     reader.GetString(3), reader.GetString(4), reader.GetString(5),
                                                     reader.GetDateTime(6), reader.GetDateTime(7), reader.GetString(8));
-                                break;
                             }
                         }
                     }
@@ -68,10 +71,10 @@ namespace JumpForFunDB
                     Console.WriteLine(ex.Message);
                 }
             }
-            return member;
+            return null;
         }
 
-        public List<Member> GetAllMembers()
+        public List<Member> GetAll()
         {
             List<Member> members = [];
             using (SqlConnection myConn = new(DatabaseManager.Connection))
@@ -86,7 +89,7 @@ namespace JumpForFunDB
                     {
                         while (reader.Read())
                         {
-                            Member member = new(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2),
+                            Member member = new(reader.GetInt32(0), reader.IsDBNull(1) ? null : reader.GetInt32(1), reader.GetString(2),
                                                 reader.GetString(3), reader.GetString(4), reader.GetString(5),
                                                 reader.GetDateTime(6), reader.GetDateTime(7), reader.GetString(8));
                             members.Add(member);

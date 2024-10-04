@@ -1,53 +1,30 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using JumpForFunDB;
+using System.Diagnostics;
+
+// Tests for T-SQL queries and classes.
 
 DatabaseManager testDB = new("JumpForFun");
 testDB.FirstTimeSetup();
 
-public class DatabaseManager
-{
-    public string DatabaseName { get; }
-    public string Connection { get; }
-    public bool SetupCompleted { get; set; } = false;
+// Creating manager for members and adding a member to database.
 
-    public DatabaseManager(string dbName)
-    {
-        DatabaseName = dbName;
-        Connection = $"Server=localhost;Database={DatabaseName};Integrated Security=True;Encrypt=False";
-    }
+MemberManager memberManager = new(testDB);
 
-    public void FirstTimeSetup()
-    {
-        if (!SetupCompleted)
-        {
-            CreateDatabase();
-            SetupCompleted = true;
-        }
-    }
+Member testMember = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.com",
+                        DateTime.Parse("05/04/1997"), DateTime.Today, "Roskilde");
+//memberManager.Add(testMember);
 
-    private void CreateDatabase()
-    {
-        using (SqlConnection conn = new("Server=localhost;Integrated Security=True;database=master;Encrypt=False"))
-        {
-            try
-            {
-                conn.Open();
-                string query = $"CREATE DATABASE {DatabaseName} ON PRIMARY " +
-                               $"(NAME = {DatabaseName}_Data, " +
-                               $"FILENAME = 'C:\\{DatabaseName}Data.mdf', " +
-                               "SIZE = 2MB, MAXSIZE = 10MB, FILEGROWTH = 10%)" +
-                               $"LOG ON (NAME = {DatabaseName}_Log, " +
-                               $"FILENAME = 'C:\\{DatabaseName}Log.ldf', " +
-                               "SIZE = 1MB, " +
-                               "MAXSIZE = 5MB, " +
-                               "FILEGROWTH = 10%)";
-                SqlCommand command = new(query, conn);
-                SqlDataReader reader = command.ExecuteReader();
-                Console.WriteLine($"DataBase {DatabaseName} has been created successfully!");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-    }
-}
+// Testing if the Add call was a success by getting the member from the database again.
+
+int memberId = 100000;
+Member member1 = memberManager.Get(memberId) ?? throw new Exception($"The member with memberId {100000} was not found.");
+
+Debug.Assert(member1.BookingId == null);
+Debug.Assert(member1.FName == "Bent");
+Debug.Assert(member1.LName == "Jensen");
+Debug.Assert(member1.PhoneNo == "+4564327172");
+Debug.Assert(member1.Email == "qwe@jumpforfun.com");
+DateTime trueDate = new(1997, 4, 5);
+Debug.Assert(member1.DateOfBirth.Date == trueDate.Date);
+Debug.Assert(member1.CreationDate.Date == DateTime.Today);
+Debug.Assert(member1.CenterLocation == "Roskilde");
