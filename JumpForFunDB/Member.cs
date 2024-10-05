@@ -47,7 +47,8 @@ namespace JumpForFunDB
 
         public override string ToString()
         {
-            return $"Member id: {MemberId}, Booking id: {BookingId}, First name: {FName}, Last name: {LName}, " +
+            string? bookingIdPrint = BookingId == null ? "null" : BookingId.ToString();
+            return $"Member id: {MemberId}, Booking id: {bookingIdPrint}, First name: {FName}, Last name: {LName}, " +
             $"Phone number: {PhoneNo}, Email: {Email}, Date of birth: {DateOfBirth}, Member sign-up date: {CreationDate}";
         }
     }

@@ -16,16 +16,32 @@ namespace JumpForFunDB
             DatabaseManager = dbManager;
         }
 
+        private (SqlConnection connection, SqlCommand command) InitializeConnection(string query)
+        {
+            SqlConnection connection = new($"Server=localhost;Integrated Security=True;database={DatabaseManager.DatabaseName};Encrypt=False");
+            try
+            {
+                connection.Open();
+                SqlCommand command = new(query, connection);
+                return (connection, command);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                connection.Close();
+            }
+            return (null, null);
+        }
+
         public void Add(Member member)
         {
-            using (SqlConnection conn = new($"Server=localhost;Integrated Security=True;database={DatabaseManager.DatabaseName};Encrypt=False"))
+            string query = "INSERT INTO Members (BookingId, FName, LName, PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation) " +
+                                   "VALUES (@BookingId, @FName, @LName, @PhoneNo, @Email, @DateOfBirth, @CreationDate, @CenterLocation)";
+            (SqlConnection connection, SqlCommand command) = InitializeConnection(query);
+            using (connection)
             {
                 try
                 {
-                    conn.Open();
-                    string query = "INSERT INTO Members (BookingId, FName, LName, PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation) " +
-                                   "VALUES (@BookingId, @FName, @LName, @PhoneNo, @Email, @DateOfBirth, @CreationDate, @CenterLocation)";
-                    SqlCommand command = new(query, conn);
                     command.Parameters.AddWithValue("@BookingId", member.BookingId == null ? DBNull.Value : member.BookingId);
                     command.Parameters.AddWithValue("@FName", member.FName);
                     command.Parameters.AddWithValue("@LName", member.LName);
@@ -43,7 +59,7 @@ namespace JumpForFunDB
             }
         }
 
-        public Member Get(int memberId)
+        public Member GetById(int memberId)
         {
             using (SqlConnection myConn = new(DatabaseManager.Connection))
             {
@@ -58,6 +74,37 @@ namespace JumpForFunDB
                         while (reader.Read())
                         {
                             if (reader.GetInt32(0) == memberId)
+                            {
+                                return new Member(reader.GetInt32(0), reader.IsDBNull(1) ? null : reader.GetInt32(1), reader.GetString(2),
+                                                    reader.GetString(3), reader.GetString(4), reader.GetString(5),
+                                                    reader.GetDateTime(6), reader.GetDateTime(7), reader.GetString(8));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return null;
+        }
+
+        public Member GetByPhoneNo(string phoneNo)
+        {
+            using (SqlConnection myConn = new(DatabaseManager.Connection))
+            {
+                try
+                {
+                    myConn.Open();
+                    string query = "SELECT MemberId, BookingId, FName, LName, " +
+                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
+                    SqlCommand command = new(query, myConn);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.GetString(4) == phoneNo)
                             {
                                 return new Member(reader.GetInt32(0), reader.IsDBNull(1) ? null : reader.GetInt32(1), reader.GetString(2),
                                                     reader.GetString(3), reader.GetString(4), reader.GetString(5),

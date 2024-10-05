@@ -38,7 +38,7 @@ namespace JumpForFunDB
                     string scriptPath = Path.Combine(directoryInfo.FullName, "DB-Initial-Startup.sql");
                     string query = File.ReadAllText(scriptPath);
                     SqlCommand command2 = new(query, conn);
-                    using SqlDataReader reader = command2.ExecuteReader();
+                    command2.ExecuteNonQuery();
                 }
                 catch (Exception ex)
                 {
