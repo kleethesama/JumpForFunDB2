@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,10 +28,10 @@ namespace JumpForFunDB
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 connection.Close();
+                Console.WriteLine(ex.Message);
             }
-            return (null, null);
+            throw new Exception($"Something went wrong when trying to connect to the databse {DatabaseManager.DatabaseName}.");
         }
 
         public void Add(Member member)
@@ -59,16 +60,15 @@ namespace JumpForFunDB
             }
         }
 
-        public Member GetById(int memberId)
+        public Member? GetById(int memberId)
         {
-            using (SqlConnection myConn = new(DatabaseManager.Connection))
+            string query = "SELECT MemberId, BookingId, FName, LName, " +
+                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
+            (SqlConnection connection, SqlCommand command) = InitializeConnection(query);
+            using (connection)
             {
                 try
                 {
-                    myConn.Open();
-                    string query = "SELECT MemberId, BookingId, FName, LName, " +
-                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
-                    SqlCommand command = new(query, myConn);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -87,19 +87,19 @@ namespace JumpForFunDB
                     Console.WriteLine(ex.Message);
                 }
             }
+            Console.WriteLine($"The member with member id {memberId} was not found.");
             return null;
         }
 
-        public Member GetByPhoneNo(string phoneNo)
+        public Member? GetByPhoneNo(string phoneNo)
         {
-            using (SqlConnection myConn = new(DatabaseManager.Connection))
+            string query = "SELECT MemberId, BookingId, FName, LName, " +
+                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
+            (SqlConnection connection, SqlCommand command) = InitializeConnection(query);
+            using (connection)
             {
                 try
                 {
-                    myConn.Open();
-                    string query = "SELECT MemberId, BookingId, FName, LName, " +
-                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
-                    SqlCommand command = new(query, myConn);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -118,20 +118,51 @@ namespace JumpForFunDB
                     Console.WriteLine(ex.Message);
                 }
             }
+            Console.WriteLine($"The member with phone number {phoneNo} was not found.");
+            return null;
+        }
+
+        public Member? GetByEmail(string email)
+        {
+            string query = "SELECT MemberId, BookingId, FName, LName, " +
+                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
+            (SqlConnection connection, SqlCommand command) = InitializeConnection(query);
+            using (connection)
+            {
+                try
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.GetString(5) == email)
+                            {
+                                return new Member(reader.GetInt32(0), reader.IsDBNull(1) ? null : reader.GetInt32(1), reader.GetString(2),
+                                                    reader.GetString(3), reader.GetString(4), reader.GetString(5),
+                                                    reader.GetDateTime(6), reader.GetDateTime(7), reader.GetString(8));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            Console.WriteLine($"The member with email {email} was not found.");
             return null;
         }
 
         public List<Member> GetAll()
         {
             List<Member> members = [];
-            using (SqlConnection myConn = new(DatabaseManager.Connection))
+            string query = "SELECT MemberId, BookingId, FName, LName, " +
+                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
+            (SqlConnection connection, SqlCommand command) = InitializeConnection(query);
+            using (connection)
             {
                 try
                 {
-                    myConn.Open();
-                    string query = "SELECT MemberId, BookingId, FName, LName, " +
-                                   "PhoneNo, Email, DateOfBirth, CreationDate, CenterLocation FROM Members";
-                    SqlCommand command = new(query, myConn);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())

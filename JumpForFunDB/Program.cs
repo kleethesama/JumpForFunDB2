@@ -12,21 +12,18 @@ MemberManager memberManager = new(testDB);
 
 Member testMember = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.com",
                         DateTime.Parse("05/04/1997"), DateTime.Today, "Roskilde");
-memberManager.Add(testMember);
+//memberManager.Add(testMember);
 
 // Testing if the Add call was a success by getting the member from the database again.
 
-int memberId = 100000;
-Member member1 = memberManager.GetById(memberId) ?? throw new Exception($"The member with member id {memberId} was not found.");
+Member? attempt1 = memberManager.GetById(100000);
+Tests.TestType1(attempt1);
+Console.WriteLine("\n" + attempt1);
 
-Debug.Assert(member1.BookingId == null);
-Debug.Assert(member1.FName == "Bent");
-Debug.Assert(member1.LName == "Jensen");
-Debug.Assert(member1.PhoneNo == "+4564327172");
-Debug.Assert(member1.Email == "qwe@jumpforfun.com");
-DateTime trueDate = new(1997, 4, 5);
-Debug.Assert(member1.DateOfBirth.Date == trueDate.Date);
-Debug.Assert(member1.CreationDate.Date == DateTime.Today);
-Debug.Assert(member1.CenterLocation == "Roskilde");
+Member? attempt2 = memberManager.GetByEmail("qwe@jumpforfun.com");
+Tests.TestType1(attempt2);
+Console.WriteLine("\n" + attempt2);
 
-Console.WriteLine("\n" + member1);
+Member? attempt3 = memberManager.GetByPhoneNo("+4564327172");
+Tests.TestType1(attempt3);
+Console.WriteLine("\n" + attempt3);

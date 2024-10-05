@@ -13,12 +13,12 @@ namespace JumpForFunDB
     internal class DatabaseManager
     {
         public string DatabaseName { get; }
-        public string Connection { get; }
+        public string ConnectionString { get; }
 
         public DatabaseManager(string dbName)
         {
             DatabaseName = dbName;
-            Connection = $"Server=localhost;Database={DatabaseName};Integrated Security=True;Encrypt=False";
+            ConnectionString = $"Server=localhost;Database={DatabaseName};Integrated Security=True;Encrypt=False";
         }
 
         public void FirstTimeSetup()
