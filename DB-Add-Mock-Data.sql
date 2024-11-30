@@ -1,5 +1,4 @@
 USE JumpForFun;
-GO
 
 INSERT INTO SubscriptionPlans (PlanId, SubLevel)
 VALUES

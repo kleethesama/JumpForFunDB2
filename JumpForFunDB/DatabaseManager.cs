@@ -44,7 +44,7 @@ internal class DatabaseManager
         }
     }
 
-    public static void CreateMockData()
+    public static void RunSQLScript(string scriptName)
     {
         using (SqlConnection conn = new("Server=localhost;Integrated Security=True;Encrypt=False"))
         {
@@ -55,7 +55,7 @@ internal class DatabaseManager
                 {
                     directoryInfo = Directory.GetParent(directoryInfo.FullName);
                 }
-                string scriptPath = Path.Combine(directoryInfo.FullName, "DB-Add-Mock-Data.sql");
+                string scriptPath = Path.Combine(directoryInfo.FullName, scriptName);
                 string query = File.ReadAllText(scriptPath);
                 conn.Open();
                 SqlCommand command2 = new(query, conn);

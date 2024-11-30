@@ -8,4 +8,3 @@ GRANT EXECUTE TO clerk;
 GRANT INSERT TO clerk;
 CREATE LOGIN frede WITH PASSWORD = 'mitKodeOrd';
 ALTER ROLE clerk ADD MEMBER frede;
-GO

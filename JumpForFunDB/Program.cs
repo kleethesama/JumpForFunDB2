@@ -4,20 +4,19 @@
 
 DatabaseManager testDB = new("JumpForFun");
 testDB.CreateDataBaseAndTables();
+DatabaseManager.RunSQLScript("DB-Create-AgeCheck-Trigger.sql");
 
 // Creating manager for members and adding a member to database.
 
 MemberManager memberManager = new(testDB);
 
-//Member testMember = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.com",
-//                        DateTime.Parse("05/04/2005"), DateTime.Today, "Roskilde");
-//memberManager.Add(testMember);
+Member testMember1 = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.com",
+                        DateTime.Parse("05/04/2006"), DateTime.Today, "Roskilde");
+memberManager.Add(testMember1);
 
-Member testMember = new(null, "Bent", "Jensen", "+4564327834", "qee@jumpforfun.com",
+Member testMember2 = new(null, "Bent", "Jensen", "+4592357834", "test@jumpforfun.com",
                         DateTime.Parse("05/04/2007"), DateTime.Today, "Roskilde");
-memberManager.Add(testMember);
-
-//testDB.CreateMockData();
+memberManager.Add(testMember2);
 
 // Testing if the Add call was a success by getting the member from the database again using candidate keys.
 
