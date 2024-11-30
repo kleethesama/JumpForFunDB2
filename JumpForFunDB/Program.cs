@@ -9,8 +9,12 @@ testDB.CreateDataBaseAndTables();
 
 MemberManager memberManager = new(testDB);
 
-Member testMember = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.com",
-                        DateTime.Parse("05/04/1997"), DateTime.Today, "Roskilde");
+//Member testMember = new(null, "Bent", "Jensen", "+4564327172", "qwe@jumpforfun.com",
+//                        DateTime.Parse("05/04/2005"), DateTime.Today, "Roskilde");
+//memberManager.Add(testMember);
+
+Member testMember = new(null, "Bent", "Jensen", "+4564327834", "qee@jumpforfun.com",
+                        DateTime.Parse("05/04/2007"), DateTime.Today, "Roskilde");
 memberManager.Add(testMember);
 
 //testDB.CreateMockData();
